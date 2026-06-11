@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penawaran Renovasi — Mayang Daru</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: #f7f6f3;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 48px auto;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    padding: 48px 56px;
+  }
+
+  /* HEADER */
+  .header {
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .header h1 {
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .header h2 {
+    font-size: 22px;
+    font-weight: normal;
+    letter-spacing: 0.01em;
+  }
+  .header-meta {
+    text-align: right;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.8;
+  }
+  .header-sub {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #555;
+    font-style: italic;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+    margin-bottom: 0;
+  }
+  .subsection-title {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #aaa;
+    padding: 12px 0 6px;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 1px solid #ddd;
+  }
+  thead th.right { text-align: right; }
+
+  tbody tr { border-bottom: 1px solid #f0eeeb; }
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody td {
+    padding: 9px 6px;
+    vertical-align: top;
+  }
+  td.no {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #aaa;
+    width: 36px;
+  }
+  td.uraian { width: 42%; }
+  td.uraian .sub {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+    margin-top: 2px;
+  }
+  td.sat, td.vol {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    text-align: center;
+    width: 48px;
+    color: #555;
+  }
+  td.harga, td.jumlah {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  td.jumlah { font-weight: bold; }
+  td.indent { padding-left: 20px; color: #555; font-style: italic; }
+
+  /* SUBTOTAL ROW */
+  tr.subtotal td {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #f7f6f3;
+  }
+  tr.subtotal td.label {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    text-align: right;
+    padding-right: 12px;
+  }
+  tr.subtotal td.amount {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: right;
+  }
+
+  /* REKAP */
+  .rekap {
+    margin-top: 48px;
+    border-top: 2px solid #1a1a1a;
+    padding-top: 24px;
+  }
+  .rekap-title {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 16px;
+  }
+  .rekap table tbody tr { border-bottom: 1px solid #eee; }
+  .rekap table tbody td { padding: 10px 6px; }
+  .rekap .total-row td {
+    border-top: 2px solid #1a1a1a;
+    padding-top: 14px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .rekap .total-row td.label-total {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: right;
+    padding-right: 16px;
+    color: #555;
+  }
+  .rekap .total-row td.amount-total {
+    font-family: 'Courier New', monospace;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* CATATAN */
+  .catatan {
+    margin-top: 48px;
+    border-top: 1px solid #ddd;
+    padding-top: 28px;
+  }
+  .catatan-title {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 18px;
+  }
+  .catatan ol {
+    padding-left: 18px;
+    color: #444;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .catatan ol li { margin-bottom: 10px; }
+  .catatan ol li strong {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    color: #888;
+    margin-bottom: 2px;
+  }
+
+  /* TTD */
+  .ttd {
+    margin-top: 56px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .ttd-box {
+    text-align: center;
+    width: 200px;
+  }
+  .ttd-box .ttd-label {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 56px;
+  }
+  .ttd-box .ttd-line {
+    border-top: 1px solid #1a1a1a;
+    padding-top: 6px;
+    font-size: 12px;
+    color: #555;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; border: none; padding: 32px 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>Penawaran Pekerjaan Renovasi</h1>
+        <h2>Proyek Mayang Daru</h2>
+      </div>
+      <div class="header-meta">
+        Kepada Yth.<br>
+        Ibu Merry<br>
+        Bandung, Juni 2026
+      </div>
+    </div>
+    <div class="header-sub">
+      Remodel Dapur Kotor &nbsp;·&nbsp; Kamar Pembantu &nbsp;·&nbsp; Area Service Lt.2
+    </div>
+  </div>
+
+  <!-- AREA 1: DAPUR KOTOR -->
+  <div class="section">
+    <div class="section-title">1 &nbsp;—&nbsp; Remodel Dapur Kotor</div>
+
+    <div class="subsection-title">1.1 &nbsp; Pekerjaan Persiapan & Bongkaran</div>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Uraian Pekerjaan</th>
+          <th class="right">Sat</th>
+          <th class="right">Vol</th>
+          <th class="right">Harga Sat</th>
+          <th class="right">Jumlah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">1</td><td class="uraian">Bongkaran opening jendela dapur</td><td class="sat">m²</td><td class="vol">3,00</td><td class="harga">105.000</td><td class="jumlah">315.000</td></tr>
+        <tr><td class="no">2</td><td class="uraian">Bongkaran pintu (dipakai kembali)</td><td class="sat">unit</td><td class="vol">1</td><td class="harga">185.000</td><td class="jumlah">185.000</td></tr>
+        <tr><td class="no">3</td><td class="uraian">Bongkaran aluminium (dipakai kembali)</td><td class="sat">unit</td><td class="vol">1</td><td class="harga">245.000</td><td class="jumlah">245.000</td></tr>
+        <tr><td class="no">4</td><td class="uraian">Bongkaran opening akses</td><td class="sat">m²</td><td class="vol">3,00</td><td class="harga">105.000</td><td class="jumlah">315.000</td></tr>
+        <tr><td class="no">5</td><td class="uraian">Perlindungan area akses</td><td class="sat">m²</td><td class="vol">20,00</td><td class="harga">55.000</td><td class="jumlah">1.100.000</td></tr>
+      </tbody>
+    </table>
+
+    <div class="subsection-title">1.2 &nbsp; Pekerjaan Pasangan & Finishing</div>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Uraian Pekerjaan</th>
+          <th class="right">Sat</th>
+          <th class="right">Vol</th>
+          <th class="right">Harga Sat</th>
+          <th class="right">Jumlah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">6</td><td class="uraian">Pemasangan homogeneous tile dapur kotor</td><td class="sat">m²</td><td class="vol">8,64</td><td class="harga">145.000</td><td class="jumlah">1.252.800</td></tr>
+        <tr><td class="no">7a</td><td class="uraian">Kitchen sink<span class="sub">material</span></td><td class="sat">unit</td><td class="vol">1</td><td class="harga">1.250.000</td><td class="jumlah">1.250.000</td></tr>
+        <tr><td class="no">7b</td><td class="uraian indent">Biaya pengadaan & pemasangan sink</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">550.000</td><td class="jumlah">550.000</td></tr>
+        <tr><td class="no">8</td><td class="uraian">Instalasi jalur air bersih & kotor sink</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">920.000</td><td class="jumlah">920.000</td></tr>
+        <tr><td class="no">9</td><td class="uraian">Pemasangan saluran kitchen exhaust hood</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">555.000</td><td class="jumlah">555.000</td></tr>
+        <tr><td class="no">10a</td><td class="uraian">Jendela besi jungkit 1,6×1,4 m<span class="sub">material + fabrikasi, engsel pivot</span></td><td class="sat">unit</td><td class="vol">1</td><td class="harga">2.950.000</td><td class="jumlah">2.950.000</td></tr>
+        <tr><td class="no">10b</td><td class="uraian indent">Biaya pengadaan & pemasangan jendela</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">750.000</td><td class="jumlah">750.000</td></tr>
+        <tr><td class="no">11</td><td class="uraian">Meja bar 1,85 m + HPL edging<span class="sub">multiplex 18mm double face, anchor tanam</span></td><td class="sat">m'</td><td class="vol">1,85</td><td class="harga">1.175.000</td><td class="jumlah">2.173.750</td></tr>
+        <tr><td class="no">12</td><td class="uraian">Pemasangan mosaic tile meja cuci<span class="sub">Venus tile, 0,15×1,8 m</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">475.000</td><td class="jumlah">475.000</td></tr>
+        <tr><td class="no">13</td><td class="uraian">Pemasangan lampu & stop kontak<span class="sub">6 titik — Nero Casa abu metalik, NYM 3×2,5mm</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">2.095.000</td><td class="jumlah">2.095.000</td></tr>
+        <tr><td class="no">14</td><td class="uraian">Perataan lantai bawah meja bar<span class="sub">screed 10 cm, 2,04 m²</span></td><td class="sat">m²</td><td class="vol">2,04</td><td class="harga">272.000</td><td class="jumlah">554.880</td></tr>
+        <tr><td class="no">15a</td><td class="uraian">Vinyl Taco Stone Series 3mm<span class="sub">material — 3 box, 9,08 m²</span></td><td class="sat">box</td><td class="vol">3</td><td class="harga">495.000</td><td class="jumlah">1.485.000</td></tr>
+        <tr><td class="no">15b</td><td class="uraian indent">Biaya pengadaan & pemasangan vinyl</td><td class="sat">m²</td><td class="vol">9,08</td><td class="harga">145.000</td><td class="jumlah">1.316.600</td></tr>
+        <tr><td class="no">16</td><td class="uraian">Setting ulang & tambah saluran air</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">1.230.000</td><td class="jumlah">1.230.000</td></tr>
+        <tr class="subtotal">
+          <td colspan="5" class="label">Subtotal Dapur Kotor</td>
+          <td class="amount">Rp 19.973.030</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- AREA 2: KAMAR PEMBANTU -->
+  <div class="section">
+    <div class="section-title">2 &nbsp;—&nbsp; Remodel Kamar Pembantu</div>
+
+    <div class="subsection-title">2.1 &nbsp; Pekerjaan Persiapan & Bongkaran</div>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th><th>Uraian Pekerjaan</th>
+          <th class="right">Sat</th><th class="right">Vol</th>
+          <th class="right">Harga Sat</th><th class="right">Jumlah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">1</td><td class="uraian">Pembongkaran tangga besi lama</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">430.000</td><td class="jumlah">430.000</td></tr>
+      </tbody>
+    </table>
+
+    <div class="subsection-title">2.2 &nbsp; Pekerjaan Pasangan & Finishing</div>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th><th>Uraian Pekerjaan</th>
+          <th class="right">Sat</th><th class="right">Vol</th>
+          <th class="right">Harga Sat</th><th class="right">Jumlah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">2</td><td class="uraian">Pemasangan pintu ex dapur</td><td class="sat">unit</td><td class="vol">1</td><td class="harga">370.000</td><td class="jumlah">370.000</td></tr>
+        <tr><td class="no">3</td><td class="uraian">Penutupan bekas opening gypsum 2 sisi<span class="sub">rangka hollow, compound, cat</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">648.000</td><td class="jumlah">648.000</td></tr>
+        <tr><td class="no">4a</td><td class="uraian">Material rangka box tandon<span class="sub">hollow 40×60×3mm, dynabolt, plat simpul</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">2.850.000</td><td class="jumlah">2.850.000</td></tr>
+        <tr><td class="no">4b</td><td class="uraian indent">Biaya fabrikasi & pemasangan rangka box<span class="sub">kubus 1,4×1,4×1,6 m + penutup gypsum, atap PVC & waterproof multiplex</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">2.650.000</td><td class="jumlah">2.650.000</td></tr>
+        <tr><td class="no">5a</td><td class="uraian">Akrilik buram 3mm — skylight<span class="sub">material, 0,4×1,4 m</span></td><td class="sat">m²</td><td class="vol">0,56</td><td class="harga">98.000</td><td class="jumlah">54.880</td></tr>
+        <tr><td class="no">5b</td><td class="uraian indent">Biaya pengadaan & pemasangan skylight</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">415.000</td><td class="jumlah">415.000</td></tr>
+        <tr><td class="no">6</td><td class="uraian">Pengecatan dinding 2 lapis<span class="sub">27,05 m²</span></td><td class="sat">m²</td><td class="vol">27,05</td><td class="harga">50.000</td><td class="jumlah">1.352.500</td></tr>
+        <tr class="subtotal">
+          <td colspan="5" class="label">Subtotal Kamar Pembantu</td>
+          <td class="amount">Rp 8.770.380</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- AREA 3: AREA SERVICE -->
+  <div class="section">
+    <div class="section-title">3 &nbsp;—&nbsp; Remodel Area Service (Lantai 2)</div>
+
+    <div class="subsection-title">3.1 &nbsp; Pekerjaan Persiapan & Bongkaran</div>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th><th>Uraian Pekerjaan</th>
+          <th class="right">Sat</th><th class="right">Vol</th>
+          <th class="right">Harga Sat</th><th class="right">Jumlah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">1</td><td class="uraian">Bongkaran opening pintu ruang service</td><td class="sat">m²</td><td class="vol">2,64</td><td class="harga">105.000</td><td class="jumlah">277.200</td></tr>
+        <tr><td class="no">2</td><td class="uraian">Bongkaran opening jendela ruang service</td><td class="sat">m²</td><td class="vol">1,80</td><td class="harga">105.000</td><td class="jumlah">189.000</td></tr>
+      </tbody>
+    </table>
+
+    <div class="subsection-title">3.2 &nbsp; Pekerjaan Pasangan & Finishing</div>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th><th>Uraian Pekerjaan</th>
+          <th class="right">Sat</th><th class="right">Vol</th>
+          <th class="right">Harga Sat</th><th class="right">Jumlah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="no">3</td><td class="uraian">Finishing bekas opening pintu & jendela<span class="sub">24 m' keliling + 1,53 m² bidang flat</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">1.700.000</td><td class="jumlah">1.700.000</td></tr>
+        <tr><td class="no">4a</td><td class="uraian">Material rangka besi platform tangga gantung<span class="sub">hollow, grating, dynabolt</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">1.980.000</td><td class="jumlah">1.980.000</td></tr>
+        <tr><td class="no">4b</td><td class="uraian indent">Biaya fabrikasi & pemasangan platform<span class="sub">tangga gantung 40×240 cm + bordes 295×75 cm</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">1.188.000</td><td class="jumlah">1.188.000</td></tr>
+        <tr><td class="no">5</td><td class="uraian">Pindah & pasang ulang outdoor AC<span class="sub">geser 2–3 m, bracket baru</span></td><td class="sat">unit</td><td class="vol">2</td><td class="harga">440.000</td><td class="jumlah">880.000</td></tr>
+        <tr><td class="no">7a</td><td class="uraian">Tandon Penguin 500L slim<span class="sub">material</span></td><td class="sat">unit</td><td class="vol">1</td><td class="harga">1.550.000</td><td class="jumlah">1.550.000</td></tr>
+        <tr><td class="no">7b</td><td class="uraian indent">Biaya pengadaan & pemasangan tandon</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">550.000</td><td class="jumlah">550.000</td></tr>
+        <tr><td class="no">8a</td><td class="uraian">Pompa Shimizu PB-158 BIT<span class="sub">material</span></td><td class="sat">unit</td><td class="vol">1</td><td class="harga">720.000</td><td class="jumlah">720.000</td></tr>
+        <tr><td class="no">8b</td><td class="uraian">APC York YRK-05<span class="sub">material</span></td><td class="sat">unit</td><td class="vol">1</td><td class="harga">195.000</td><td class="jumlah">195.000</td></tr>
+        <tr><td class="no">8c</td><td class="uraian indent">Biaya pengadaan & pemasangan pompa + APC</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">485.000</td><td class="jumlah">485.000</td></tr>
+        <tr><td class="no">9a</td><td class="uraian">Turbin ventilator 24 inch<span class="sub">material</span></td><td class="sat">unit</td><td class="vol">1</td><td class="harga">895.000</td><td class="jumlah">895.000</td></tr>
+        <tr><td class="no">9b</td><td class="uraian indent">Biaya pengadaan & pemasangan turbin</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">520.000</td><td class="jumlah">520.000</td></tr>
+        <tr><td class="no">10a</td><td class="uraian">Atap Alderon Greca single 3m<span class="sub">material — 4 lembar, timpa solartuff</span></td><td class="sat">lbr</td><td class="vol">4</td><td class="harga">295.000</td><td class="jumlah">1.180.000</td></tr>
+        <tr><td class="no">10b</td><td class="uraian indent">Biaya pemasangan Alderon (refastening)</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">395.000</td><td class="jumlah">395.000</td></tr>
+        <tr><td class="no">11a</td><td class="uraian">Atap PVC flat white doff<span class="sub">material — 8 m²</span></td><td class="sat">m²</td><td class="vol">8,00</td><td class="harga">155.000</td><td class="jumlah">1.240.000</td></tr>
+        <tr><td class="no">11b</td><td class="uraian indent">Rangka hollow & biaya pemasangan atap PVC</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">1.435.000</td><td class="jumlah">1.435.000</td></tr>
+        <tr><td class="no">12</td><td class="uraian">Bongkaran opening roster 1,28 m²</td><td class="sat">m²</td><td class="vol">1,28</td><td class="harga">105.000</td><td class="jumlah">134.400</td></tr>
+        <tr><td class="no">13a</td><td class="uraian">Roster 20×20 cm<span class="sub">material — 36 bh</span></td><td class="sat">bh</td><td class="vol">36</td><td class="harga">17.000</td><td class="jumlah">612.000</td></tr>
+        <tr><td class="no">13b</td><td class="uraian indent">Biaya pasang + finish + weathershield roster<span class="sub">termasuk dempul & cat</span></td><td class="sat">ls</td><td class="vol">1</td><td class="harga">1.103.000</td><td class="jumlah">1.103.000</td></tr>
+        <tr><td class="no">14a</td><td class="uraian">Jemuran lipat stainless 5 bar 120cm<span class="sub">material</span></td><td class="sat">unit</td><td class="vol">1</td><td class="harga">265.000</td><td class="jumlah">265.000</td></tr>
+        <tr><td class="no">14b</td><td class="uraian">Jemuran tarik Pano.V abu-abu 2 lipat<span class="sub">material</span></td><td class="sat">unit</td><td class="vol">2</td><td class="harga">132.000</td><td class="jumlah">264.000</td></tr>
+        <tr><td class="no">14c</td><td class="uraian indent">Biaya pengadaan & pemasangan jemuran</td><td class="sat">ls</td><td class="vol">1</td><td class="harga">200.000</td><td class="jumlah">200.000</td></tr>
+        <tr class="subtotal">
+          <td colspan="5" class="label">Subtotal Area Service Lt.2</td>
+          <td class="amount">Rp 17.756.600</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- REKAPITULASI -->
+  <div class="rekap">
+    <div class="rekap-title">Rekapitulasi</div>
+    <table>
+      <tbody>
+        <tr>
+          <td style="font-family:'Courier New',monospace;font-size:11px;color:#888;">1</td>
+          <td>Remodel Dapur Kotor</td>
+          <td style="font-family:'Courier New',monospace;text-align:right;white-space:nowrap;">Rp 19.973.030</td>
+        </tr>
+        <tr>
+          <td style="font-family:'Courier New',monospace;font-size:11px;color:#888;">2</td>
+          <td>Remodel Kamar Pembantu</td>
+          <td style="font-family:'Courier New',monospace;text-align:right;white-space:nowrap;">Rp 8.770.380</td>
+        </tr>
+        <tr>
+          <td style="font-family:'Courier New',monospace;font-size:11px;color:#888;">3</td>
+          <td>Remodel Area Service Lantai 2</td>
+          <td style="font-family:'Courier New',monospace;text-align:right;white-space:nowrap;">Rp 17.756.600</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="2" class="label-total">Total Penawaran</td>
+          <td class="amount-total">Rp 46.500.000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CATATAN -->
+  <div class="catatan">
+    <div class="catatan-title">Catatan & Ketentuan</div>
+    <ol>
+      <li><strong>Lingkup Pekerjaan</strong>Penawaran ini hanya mencakup pekerjaan yang tercantum di atas. Pekerjaan di luar lingkup akan dikonfirmasikan terlebih dahulu dan dihitung sebagai pekerjaan tambah.</li>
+      <li><strong>Pekerjaan Tambah Kurang</strong>Setiap perubahan scope akan dituangkan dalam addendum tertulis dan disepakati kedua pihak sebelum pelaksanaan.</li>
+      <li><strong>Kondisi Lapangan</strong>Apabila ditemukan kondisi tersembunyi yang mempengaruhi pelaksanaan (instalasi existing tidak terpetakan, kerusakan struktur tidak terlihat, dll) akan dikonfirmasikan sebelum pekerjaan dilanjutkan.</li>
+      <li><strong>Material</strong>Material yang tercantum adalah spesifikasi acuan. Apabila terjadi kelangkaan, akan diusulkan material setara dengan persetujuan pemberi kerja. Material supply by owner tidak termasuk dalam nilai penawaran ini.</li>
+      <li><strong>Validitas</strong>Penawaran berlaku 14 hari sejak tanggal terbit.</li>
+      <li><strong>Pembayaran</strong>Skema termin akan disepakati bersama sebelum penandatanganan kontrak.</li>
+      <li><strong>Pajak</strong>Kontraktor non-PKP. PPN tidak dipungut.</li>
+    </ol>
+  </div>
+
+  <!-- TTD -->
+  <div class="ttd">
+    <div class="ttd-box">
+      <div class="ttd-label">Hormat kami</div>
+      <div class="ttd-line">Kontraktor Pelaksana</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
